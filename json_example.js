@@ -3,6 +3,7 @@ import moment from 'moment';
 
 const json = {
 	tables: [
+		// pessoa
 		{
 			name: 'cadastro_pessoa',
 			replaceName: 'pessoas',
@@ -14,7 +15,7 @@ const json = {
 				{ key: 'pes_data_cadastro_pessoa', replace: 'createdAt' },
 				{
 					func: async (o, newDb) => {
-						const Local = require('/home/bruno/Documentos/Projetos/oton_isp/api/src/models/local.js').default;
+						const Local = require('/home/arthur/Documents/projetos/oton_api_isp/src/models/local.js').default;
 
 						let logradouro = o.pes_endereco.replace(new RegExp(/\,(.*)/), '');
 						let numero = o.pes_endereco.replace(new RegExp(/.+?(?<=\, )/), '');
@@ -173,6 +174,7 @@ const json = {
 			]
 		},
 
+		// cabecalho_custo_fixo
 		{
 			name: 'lancamento_custo_fixo',
 			replaceName: 'custo_fixo',
@@ -206,6 +208,7 @@ const json = {
 			]
 		},
 
+		// custo_fixo_parcela
 		{
 			name: 'custo_fixo',
 			replaceName: 'custo_fixo_parcela',
@@ -271,9 +274,9 @@ const json = {
 					replace: 'totalParcelamento',
 					default: { key: 'lancustvar_valor_total' }
 				},
-				{ value: 8, replace: 'planoContasFk' },
-				{ value: 27, replace: 'grupoContasFk' },
-				{ value: 23, replace: 'subgrupoContasFk' },
+				{ value: 8, replace: 'planoContasFk' }, // NÃO IMPLEMENTADO
+				{ value: 27, replace: 'grupoContasFk' }, // NÃO IMPLEMENTADO
+				{ value: 23, replace: 'subgrupoContasFk' }, // NÃO IMPLEMENTADO
 				{ query: 'select custvar_cod_fornecedor as alias from custo_variavel where custvar_cod_lancamento = ? limit 1', queryFields: ['lancustvar_id'], replace: 'credorFornecedor' },
 				{ query: 'select custvar_cod_funcionario as alias from custo_variavel where custvar_cod_lancamento = ? limit 1', queryFields: ['lancustvar_id'], replace: 'credorFuncionario' },
 				{ query: 'select case when custvar_cod_fornecedor = NULL then "FUNCIONÁRIO" else "FORNECEDOR" END as alias from custo_variavel where custvar_cod_lancamento = ?', queryFields: ['lancustvar_id'], replace: 'tipoCredor', default: 'FORNECEDOR' },
@@ -363,9 +366,9 @@ const json = {
 					replace: 'totalParcelamento',
 					default: { key: 'lancabec_valor_total' }
 				},
-				{ value: 8, replace: 'planoContasFk' },
-				{ value: 27, replace: 'grupoContasFk' },
-				{ value: 23, replace: 'subgrupoContasFk' },
+				{ value: 8, replace: 'planoContasFk' }, // NÃO IMPLEMENTADO
+				{ value: 27, replace: 'grupoContasFk' }, // NÃO IMPLEMENTADO
+				{ value: 23, replace: 'subgrupoContasFk' }, // NÃO IMPLEMENTADO
 				{ key: 'lancabec_cod_fornecedor', replace: 'credorFornecedor' },
 				{ value: null, replace: 'credorFuncionario' },
 				{ value: 'FORNECEDOR', replace: 'tipoCredor' },
@@ -404,6 +407,8 @@ const json = {
 				{ key: 'custvar_valor_juros', replace: 'juros' }
 			]
 		},
+
+		// compra_suprimento
 		{
 			name: 'lancamento_compra_corpo',
 			replaceName: 'compra_suprimento',
@@ -417,6 +422,7 @@ const json = {
 			]
 		},
 
+		auditoria
 		{
 			name: 'auditoria',
 			replaceName: 'audit',
@@ -433,6 +439,7 @@ const json = {
 				{ value: new Date(), replace: 'createdAt', type: 'DATE' }
 			]
 		}
+
 	]
 };
 

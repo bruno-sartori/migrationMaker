@@ -12,7 +12,7 @@ const oldDb = new Database({
 	host: 'localhost',
 	user: 'root',
 	password: 'root',
-	database: 'oton_isp'
+	database: 'oton_isp_old'
 });
 
 const newDb = new Database({
@@ -20,7 +20,7 @@ const newDb = new Database({
 	host: 'localhost',
 	user: 'root',
 	password: 'root',
-	database: 'test'
+	database: 'teste2'
 });
 
 const knex = new Knex({
@@ -30,7 +30,7 @@ const knex = new Knex({
     host : '127.0.0.1',
     user : 'root',
     password : 'root',
-    database : 'test'
+    database : 'teste2'
   }
 });
 
