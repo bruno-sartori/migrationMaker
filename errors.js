@@ -1,55 +1,6 @@
 [
     [
         {
-            "code": "ER_TRUNCATED_WRONG_VALUE",
-            "errno": 1292,
-            "sqlMessage": "Incorrect datetime value: '19988-05-25' for column 'dataAdmissao' at row 1",
-            "sqlState": "22007",
-            "index": 0,
-            "sql": "insert into `funcionarios` (`agencia`, `cargo`, `carteiraNumero`, `carteiraSerie`, `conta`, `createdAt`, `dataAdmissao`, `federatedBaseBancoFk`, `id`, `obs`, `pessoasFk`, `pis`, `status`, `updatedAt`) values ('6979', 'TECNICO REDES TELECOMUNICAÃ‡Ã•ES', '021778', '00437-sp', '1000100-5', '2018-06-07 00:00:00.000', '19988-05-25', 1, '000015', '', '000276', '206.212.834-14', true, NULL)"
-        },
-        {
-            "fun_id": "000015",
-            "fun_data_admissao": "19988-05-25",
-            "fun_carteira_trabalho_numero": "021778",
-            "fun_cargo": "TECNICO REDES TELECOMUNICAÃ‡Ã•ES",
-            "fun_pis": "206.212.834-14",
-            "fun_agencia": "6979",
-            "fun_conta": "1000100-5",
-            "fun_obs": "",
-            "fun_cod_pessoa": "000276",
-            "fun_data_cadastro": "2018-06-07T03:00:00.000Z",
-            "fun_cod_banco": "000001",
-            "fun_carteira_trabalho_serie": "00437-sp",
-            "fun_data_nascimento": "2018-04-12T03:00:00.000Z"
-        }
-    ],
-    [
-        {
-            "code": "ER_NO_REFERENCED_ROW_2",
-            "errno": 1452,
-            "sqlMessage": "Cannot add or update a child row: a foreign key constraint fails (`test`.`custo_fixo`, CONSTRAINT `custo_fixo_credorfuncionario_foreign` FOREIGN KEY (`credorFuncionario`) REFERENCES `funcionarios` (`id`))",
-            "sqlState": "23000",
-            "index": 0,
-            "sql": "insert into `custo_fixo` (`createdAt`, `credorFornecedor`, `credorFuncionario`, `diaVencimento`, `grupoContasFk`, `historico`, `id`, `inicioLancamento`, `obs`, `planoContasFk`, `status`, `subgrupoContasFk`, `tipoCredor`, `updatedAt`, `valorParcela`) values ('2018-06-07 00:00:00.000', NULL, '000015', '05', 27, 'salario', '000056', '2018-05', '', 8, 1, 23, 'FUNCIONÁRIO', NULL, 1820)"
-        },
-        {
-            "lancustfix_id": "000056",
-            "lancustfix_historico": "salario",
-            "lancustfix_obs": "",
-            "lancustfix_cod_grupo_despesa": "000004",
-            "lancustfix_cod_despesa": "000011",
-            "lancustfix_cod_fornecedor": null,
-            "lancustfix_cod_funcionario": "000015",
-            "lancustfix_data_primeiro_vencimento": "05/2018",
-            "lancustfix_valor_parcela": 1820,
-            "lancustfix_data_lancamento": "2018-06-07T03:00:00.000Z",
-            "lancustfix_ativo": 1,
-            "lancustfix_dia_vencimento": 5
-        }
-    ],
-    [
-        {
             "code": "ER_NO_DEFAULT_FOR_FIELD",
             "errno": 1364,
             "sqlMessage": "Field 'custoVariavelFk' doesn't have a default value",
@@ -147,7 +98,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2017-01-23T02:00:00.000Z",
             "custvar_valor_total": 1500,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2017-01-09T02:00:00.000Z",
             "custvar_valor_parcela": 1500,
             "custvar_data_pagamento": "2017-01-09T02:00:00.000Z",
@@ -228,7 +179,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2017-02-11T02:00:00.000Z",
             "custvar_valor_total": 20,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2017-02-11T02:00:00.000Z",
             "custvar_valor_parcela": 20,
             "custvar_data_pagamento": "2017-02-11T02:00:00.000Z",
@@ -255,7 +206,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2017-02-15T02:00:00.000Z",
             "custvar_valor_total": 23.59,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2017-02-15T02:00:00.000Z",
             "custvar_valor_parcela": 23.59,
             "custvar_data_pagamento": null,
@@ -282,7 +233,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2017-02-15T02:00:00.000Z",
             "custvar_valor_total": 46.93,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2017-02-15T02:00:00.000Z",
             "custvar_valor_parcela": 46.93,
             "custvar_data_pagamento": null,
@@ -309,7 +260,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2017-04-19T03:00:00.000Z",
             "custvar_valor_total": 220,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2017-06-07T03:00:00.000Z",
             "custvar_valor_parcela": 220,
             "custvar_data_pagamento": null,
@@ -390,7 +341,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2018-01-20T02:00:00.000Z",
             "custvar_valor_total": 6000,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2018-01-20T02:00:00.000Z",
             "custvar_valor_parcela": 6000,
             "custvar_data_pagamento": null,
@@ -417,7 +368,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2018-02-22T03:00:00.000Z",
             "custvar_valor_total": 6000,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2018-02-20T03:00:00.000Z",
             "custvar_valor_parcela": 6000,
             "custvar_data_pagamento": null,
@@ -444,7 +395,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2018-01-20T02:00:00.000Z",
             "custvar_valor_total": 3000,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2018-01-20T02:00:00.000Z",
             "custvar_valor_parcela": 3000,
             "custvar_data_pagamento": null,
@@ -471,7 +422,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2018-02-20T03:00:00.000Z",
             "custvar_valor_total": 3000,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2018-02-20T03:00:00.000Z",
             "custvar_valor_parcela": 3000,
             "custvar_data_pagamento": null,
@@ -498,7 +449,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2017-12-15T02:00:00.000Z",
             "custvar_valor_total": 24000,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2018-05-26T03:00:00.000Z",
             "custvar_valor_parcela": 24000,
             "custvar_data_pagamento": null,
@@ -525,7 +476,7 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2017-12-08T02:00:00.000Z",
             "custvar_valor_total": 176000,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2018-05-26T03:00:00.000Z",
             "custvar_valor_parcela": 176000,
             "custvar_data_pagamento": null,
@@ -552,32 +503,13 @@
             "custvar_cod_funcionario": null,
             "custvar_data": "2018-06-19T03:00:00.000Z",
             "custvar_valor_total": 2630,
-            "custvar_num_parcela": "Única",
+            "custvar_num_parcela": null,
             "custvar_data_vencimento": "2018-06-21T03:00:00.000Z",
             "custvar_valor_parcela": 2630,
             "custvar_data_pagamento": null,
             "custvar_valor_pago": null,
             "custvar_valor_juros": null,
             "custvar_cod_lancamento_compra": null
-        }
-    ],
-    [
-        {
-            "code": "ER_WARN_DATA_OUT_OF_RANGE",
-            "errno": 1264,
-            "sqlMessage": "Out of range value for column 'quantidade' at row 1",
-            "sqlState": "22003",
-            "index": 0,
-            "sql": "insert into `compra_suprimento` (`custoVariavelFk`, `quantidade`, `subgrupoContasFk`, `suprimentosFk`, `valorTotal`, `valorUnitario`) values (584, 1500000, 11, '000314', 53100, 0.354)"
-        },
-        {
-            "lancorp_id": "000824",
-            "lancorp_quantidade": 1500000,
-            "lancorp_valor_unitario": 0.354,
-            "lancorp_valor_total": 53100,
-            "lancorp_cod_suprimento": "000314",
-            "lancorp_cod_cabecalho": "000265",
-            "lancorp_cod_despesa": "000003"
         }
     ],
     {
@@ -635,7 +567,8 @@
             "000052": 52,
             "000053": 53,
             "000054": 54,
-            "000055": 55
+            "000055": 55,
+            "000056": 56
         },
         "lancamento_custo_variavel": {
             "000001": [

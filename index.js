@@ -41,10 +41,11 @@ function load(i, text) {
 }
 
 async function binaryConvert(table, field) {
-	await oldDb.query(`update ${table} set ${field} = convert(binary convert(${field} using latin1) using utf8)`);
+	await oldDb.query(`update ${table} set ${field} = case when convert(binary convert(${field} using latin1) using utf8) is null then ${field} else convert(binary convert(${field} using latin1) using utf8) end`);
 }
 
 async function processTables() {
+	console.log("PROCESSING TABLES...");
 	const errors = [];
 	const afterExecute = {};
 	await newDb.query('set foreign_key_checks=0');
@@ -68,7 +69,8 @@ async function processTables() {
 		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 29.160 where lancorp_id = 537'),
 		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 45.360 where lancorp_id = 538'),
 		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 129.40 where lancorp_id = 539'),
-		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 129.600 where lancorp_id = 540')
+		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 129.600 where lancorp_id = 540'),
+		oldDb.query('update cadastro_funcionario set fun_data_admissao = NOW() where fun_id = 15')
 	]);
 
 	for (let i = 0; i < json.tables.length; i++) {
@@ -95,6 +97,7 @@ async function processTables() {
 
 			for (let obj of table.fields) {
 				if (Object.prototype.hasOwnProperty.call(obj, 'key')) {
+					await binaryConvert(oldName, obj.key);
 					replace[obj.replace] = record[obj.key];
 				} else if (Object.prototype.hasOwnProperty.call(obj, 'value')) {
 					replace[obj.replace] = obj.value;
@@ -123,6 +126,10 @@ async function processTables() {
 				if (Object.prototype.hasOwnProperty.call(obj, 'type') && obj.type === 'DATE') {
 					if (isValidDate(replace[obj.replace])) {
 						replace[obj.replace] = moment(replace[obj.replace]).format('YYYY-MM-DD HH:mm:ss');
+					} else if (replace[obj.replace] === null) {
+						replace[obj.replace] = null;
+					} else {
+						replace[obj.replace] = moment().format('YYYY-MM-DD HH:mm:ss');
 					}
 				}
 
@@ -167,7 +174,7 @@ async function processTables() {
 						afterExecute[oldName] = {};
 					}
 
-					const exec = await execute(lastInsertId, records[j], newDb, oldDb);
+					const exec = await execute(lastInsertId, records[j], newDb, oldDb, afterExecute);
 					if (exec !== false) {
 						afterExecute[oldName] = { ...afterExecute[oldName], ...exec };
 					}

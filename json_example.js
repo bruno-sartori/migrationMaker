@@ -137,7 +137,7 @@ const json = {
 			},
 			fields: [
 				{ key: 'fun_id', replace: 'id' },
-				{ key: 'fun_data_admissao', replace: 'dataAdmissao' },
+				{ key: 'fun_data_admissao', replace: 'dataAdmissao', type: 'DATE' },
 				{ key: 'fun_carteira_trabalho_numero', replace: 'carteiraNumero' },
 				{ key: 'fun_carteira_trabalho_serie', replace: 'carteiraSerie' },
 				{ key: 'fun_cargo', replace: 'cargo' },
@@ -163,10 +163,21 @@ const json = {
 					newDb.query('truncate table suprimentos')
 				]);
 			},
+			afterExecute: async (insertId, o, newDb) => {
+				await newDb.query('insert into estoque_itens (estoqueMinimo, estoqueMaximo, suprimentosFk, quantidade, status, estoqueLocalFk) values (?, ?, ?, ?, ?, ?)', 
+				[null, null, insertId, 0, true, 1]
+				);
+
+				return false;
+			},
 			fields: [
 				{ key: 'sup_id', replace: 'id' },
 				{ key: 'sup_nome', replace: 'nome' },
 				{ key: 'sup_descricao', replace: 'descricao' },
+				{ value: 0, replace: 'estoqueMinimo' },
+				{ value: 0, replace: 'precoCusto' },
+				{ value: 0, replace: 'porcentagemLucro' },
+				{ value: 0, replace: 'precoPraticado' }, 
 				{ value: true, replace: 'status' },
 				{ value: new Date(), replace: 'createdAt' },
 				{ value: null, replace: 'updatedAt' }
@@ -286,9 +297,15 @@ const json = {
 		{
 			name: 'lancamento_compra_cabecalho',
 			replaceName: 'custo_variavel',
-			afterExecute: (insertId, o) => {
+			afterExecute: async (insertId, o, newDb) => {
 				const resp = {};
 				resp[o.lancabec_id] = insertId;
+
+				await newDb.query(
+					'insert into estoque_transacoes (tipoTransacao, descricao, comprasFk, estoqueLocalFkTarget, operadoresFk, createdAt) values (?, ?, ?, ?, ?, NOW())', 
+					['COMPRA', 'Migrado do Banco antigo', insertId, 1, 1]
+				);
+
 				return resp;
 			},
 			fields: [
@@ -407,6 +424,12 @@ const json = {
 		{
 			name: 'lancamento_compra_corpo',
 			replaceName: 'compra_suprimento',
+			afterExecute: async (insertId, o, newDb, oldDb, afterExecute) => {
+				const transacao = await newDb.query('select id from estoque_transacoes where comprasFk = ?', [afterExecute['lancamento_compra_cabecalho'][o.lancorp_cod_cabecalho]]);
+				await newDb.query('insert into estoque_transacoes_itens (suprimentosFk, quantidade, estoqueTransacaoFk) values (?, ?, ?)', [o.lancorp_cod_suprimento, o.lancorp_quantidade, transacao[0].id]);
+
+				return false;
+			},
 			fields: [
 				{ func: (o, newDb, oldDb, afterExecute) => afterExecute['lancamento_compra_cabecalho'][o.lancorp_cod_cabecalho], replace: 'custoVariavelFk' },
 				{ key: 'lancorp_quantidade', replace: 'quantidade' },
