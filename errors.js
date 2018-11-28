@@ -513,6 +513,7 @@
         }
     ],
     {
+        "cadastro_suprimento": {},
         "lancamento_custo_fixo": {
             "000002": 2,
             "000003": 3,
@@ -2662,6 +2663,7 @@
                 696
             ]
         },
-        "custo_variavel": {}
+        "custo_variavel": {},
+        "lancamento_compra_corpo": {}
     }
 ]

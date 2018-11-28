@@ -426,7 +426,9 @@ const json = {
 			replaceName: 'compra_suprimento',
 			afterExecute: async (insertId, o, newDb, oldDb, afterExecute) => {
 				const transacao = await newDb.query('select id from estoque_transacoes where comprasFk = ?', [afterExecute['lancamento_compra_cabecalho'][o.lancorp_cod_cabecalho]]);
+				console.log(o.lancorp_cod_suprimento, o.lancorp_quantidade, transacao[0].id);
 				await newDb.query('insert into estoque_transacoes_itens (suprimentosFk, quantidade, estoqueTransacaoFk) values (?, ?, ?)', [o.lancorp_cod_suprimento, o.lancorp_quantidade, transacao[0].id]);
+				await newDb.query('update estoque_itens set status = true, quantidade = quantidade + ?, status = true where suprimentosFk = ? and estoqueLocalFk = ?', [o.lancorp_quantidade, o.lancorp_cod_suprimento, 1]);
 
 				return false;
 			},
