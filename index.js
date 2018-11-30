@@ -70,7 +70,8 @@ async function processTables() {
 		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 45.360 where lancorp_id = 538'),
 		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 129.40 where lancorp_id = 539'),
 		oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 129.600 where lancorp_id = 540'),
-		oldDb.query('update cadastro_funcionario set fun_data_admissao = NOW() where fun_id = 15')
+		oldDb.query('update cadastro_funcionario set fun_data_admissao = NOW() where fun_id = 15'),
+		oldDb.query('update cadastro_pessoa set pes_cidade = "IBIRA" WHERE pes_id = 275'),
 	]);
 
 	for (let i = 0; i < json.tables.length; i++) {
