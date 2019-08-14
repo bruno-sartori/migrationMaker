@@ -5,6 +5,7 @@
   "preferGlobal": true,
   "scripts": {
     "start": "babel-node index.js",
+    "migrate": "mysql -u root -proot -e 'drop database if exists test; drop server if exists portalLink; create database test;' && sequelize db:migrate && sequelize db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node_modules/babel-cli/bin/babel.js src --out-dir build"
   },
@@ -25,13 +26,24 @@
     "mocha": "^2.5.3",
     "nodemon": "^1.10.2",
     "supertest": "^1.2.0",
-    "testdouble": "^1.6.0"
+    "testdouble": "^1.6.0",
+    "sequelize": "^4.43.0"
   },
   "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "bcrypt": "^3.0.2",
+    "artillery": "^1.6.0-28",
+    "axios": "^0.18.0",
+    "babel-plugin-add-module-exports": "^1.0.0",
     "babel-cli": "^6.14.0",
     "babel-preset-es2015": "^6.9.0",
     "knex": "^0.15.2",
     "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
     "shelljs": "^0.8.2",
     "util": "^0.11.0"
   },

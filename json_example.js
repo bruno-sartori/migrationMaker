@@ -14,7 +14,7 @@ const json = {
 				{ key: 'pes_data_cadastro_pessoa', replace: 'createdAt' },
 				{
 					func: async (o, newDb) => {
-						const Local = require('/home/bruno/Documentos/Projetos/oton_isp/api/src/models/local.js').default;
+						const Local = require('./local.js').default;
 
 						let logradouro = o.pes_endereco.replace(new RegExp(/\,(.*)/), '');
 						let numero = o.pes_endereco.replace(new RegExp(/.+?(?<=\, )/), '');

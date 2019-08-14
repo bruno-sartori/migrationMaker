@@ -1,0 +1,8 @@
+var path = require('path');
+
+module.exports = {
+	config: path.resolve('babelHook.js'),
+	'migrations-path': path.resolve('migrations'),
+	'models-path': path.resolve('models_sequelize'),
+	'seeders-path': path.resolve('seeds')
+};
