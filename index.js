@@ -1,4 +1,5 @@
 import datasource from './datasource';
+import fs from 'fs';
 
 const { oldDb, newDb } = datasource();
 
@@ -41,7 +42,7 @@ async function processTables() {
 			oldDb.query('update lancamento_compra_corpo set lancorp_quantidade = 1.000, lancorp_valor_total = 129.600 where lancorp_id = 540')
 		]);
 	} catch (error) {
-		await fs.writeFileSync("./errors.js", JSON.stringify(errors, null, 4), (err) => {
+		await fs.writeFileSync("./errors.js", error, (err) => {
 			if(err) {
 				console.log("ERRO: ");
 				return console.err(err);

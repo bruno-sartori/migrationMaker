@@ -1,0 +1,1 @@
+SequelizeDatabaseError: Column 'pes_nome' cannot be null
