@@ -1,3 +1,4 @@
+import fs from 'fs';
 import datasource from '../datasource';
 import { isValidDate } from '../util/isValidVariable';
 

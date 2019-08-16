@@ -1,4 +1,5 @@
 import datasource from '../datasource';
+import fs from 'fs';
 
 const { newDb, oldDb } = datasource();
 

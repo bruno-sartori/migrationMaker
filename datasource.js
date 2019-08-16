@@ -23,19 +23,40 @@ export function loadModels(sequelize, modelsDir) {
 }
 
 export default function () {
-	const oldDb = new Sequelize('oton_contabil', 'root', 'root', {
-		host: 'localhost',
-		port: '3306',
-		dialect: 'mysql',
-		logging: false
-	});
-	
-	const newDb = new Sequelize('test', 'root', 'root', {
-		host: 'localhost',
-		port: '3306',
-		dialect: 'mysql',
-		logging: false
-	});
+	let oldDb;
+	let newDb;
+
+	if (process.env.NODE_ENV === 'production') {
+		oldDb = new Sequelize('migrated', 'oton', 'zeta@odin@145', {
+			host: '187.49.240.20',
+			port: '9306',
+			dialect: 'mysql',
+			logging: false
+		});
+
+		newDb = new Sequelize('isp_dev', 'oton', 'zeta@odin@145', {
+			host: '187.49.240.20',
+			port: '9306',
+			dialect: 'mysql',
+			logging: false
+		});
+	} else {
+		oldDb = new Sequelize('oton_contabil', 'root', 'root', {
+			host: 'localhost',
+			port: '3306',
+			dialect: 'mysql',
+			logging: false
+		});
+		
+		newDb = new Sequelize('test', 'root', 'root', {
+			host: 'localhost',
+			port: '3306',
+			dialect: 'mysql',
+			logging: false
+		});
+	}
+
+
 
 	newDb.models = loadModels(newDb, './models_sequelize');
 
