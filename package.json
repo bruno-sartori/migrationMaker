@@ -6,6 +6,7 @@
   "scripts": {
     "start": "babel-node index.js",
     "migrate": "mysql -u root -proot -e 'drop database if exists test; drop server if exists portalLink; create database test;' && sequelize db:migrate && sequelize db:seed:all",
+    "migrate:production": "mysql -u root -proot -e 'drop database if exists isp_dev; drop server if exists portalLink; create database isp_dev;' && NODE_ENV=production sequelize db:migrate && NODE_ENV=production sequelize db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node_modules/babel-cli/bin/babel.js src --out-dir build"
   },
