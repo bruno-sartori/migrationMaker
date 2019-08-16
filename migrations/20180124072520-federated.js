@@ -1,8 +1,16 @@
-const DB_PORTAL_HOST = '192.168.9.22';
-const DB_PORTAL_PORT = '3306';
-const DB_PORTAL_NAME = 'oton_portal';
-const DB_PORTAL_USER = 'oton';
-const DB_PORTAL_PASSWORD = 'zeta@odin@145';
+let DB_PORTAL_HOST = '192.168.9.22';
+let DB_PORTAL_PORT = '3306';
+let DB_PORTAL_NAME = 'oton_portal';
+let DB_PORTAL_USER = 'oton';
+let DB_PORTAL_PASSWORD = 'zeta@odin@145';
+
+if (process.env.NODE_ENV === 'production') {
+	DB_PORTAL_HOST = '187.49.240.51';
+	DB_PORTAL_PORT = '9306';
+	DB_PORTAL_NAME = 'oton_portal';
+	DB_PORTAL_USER = 'oton';
+	DB_PORTAL_PASSWORD = 'zeta@odin@145';
+}
 
 export function up(queryInterface) {
 	return Promise.all([
