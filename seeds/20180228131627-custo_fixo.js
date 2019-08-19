@@ -8,7 +8,6 @@ const binaryConvert = async (table, field) => {
 }
 
 export async function up(queryInterface) {
-	
 	const custos = await oldDb.query('select * from lancamento_custo_fixo', { type: oldDb.QueryTypes.SELECT });
 
 	const data = [];
@@ -60,7 +59,7 @@ export async function up(queryInterface) {
 
 		data.push(custoFixo);
 	}
-
+	
 	try {
 		await queryInterface.bulkInsert('custo_fixo', data);
 	} catch (error) {
