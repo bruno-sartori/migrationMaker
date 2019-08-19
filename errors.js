@@ -1,1 +1,1 @@
-SequelizeDatabaseError: Column 'pes_nome' cannot be null
+SequelizeForeignKeyConstraintError: Cannot add or update a child row: a foreign key constraint fails (`oton_contabil`.`cadastro_fornecedor`, CONSTRAINT `cadastro_fornecedor_ibfk_1` FOREIGN KEY (`for_cod_pessoa`) REFERENCES `cadastro_pessoa` (`pes_id`))
