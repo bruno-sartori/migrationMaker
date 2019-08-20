@@ -1,6 +1,7 @@
 import datasource from '../datasource';
 import fs from 'fs';
 import { isValidDate } from '../util/isValidVariable';
+import dreMap from '../dreMap';
 
 const { newDb, oldDb } = datasource();
 
@@ -32,29 +33,40 @@ const saveCustoVariavel = async () => {
 		]);
 
 		const getDRE = async () => {
-			let nome = await oldDb.query(
-				'select desp_nome from cadastro_despesa where desp_id = (select custvar_cod_despesa from custo_variavel where custvar_cod_lancamento = ? limit 1)',
+			const despId = await oldDb.query(
+				'select desp_id from cadastro_despesa where desp_id = (select custvar_cod_despesa from custo_variavel where custvar_cod_lancamento = ? limit 1)',
 				{ type: oldDb.QueryTypes.SELECT, replacements: [o.lancustvar_id] }
 			);
 
-			if (nome.length === 0) {
+			if (despId.length === 0) {
+				console.error('No DespId - lancustvar', o.lancustvar_id);
 				return null;
 			}
 
-			nome = nome[0].desp_nome.split(' ').map(o => '%' + o + '%').join(' ');
+			if (typeof dreMap[despId[0].desp_id] !== 'undefined') {
+				const response = await newDb.query(
+					'select s.id, s.grupoContasFk, g.planoContasFk from subgrupo_contas s left join grupo_contas g on g.id = s.grupoContasFk where s.id = ?',
+					{ type: oldDb.QueryTypes.SELECT, replacements: [dreMap[despId[0].desp_id]] }
+				);
 
-			const response = await newDb.query(
-				'select s.id, s.grupoContasFk, g.planoContasFk from subgrupo_contas s left join grupo_contas g on g.id = s.grupoContasFk where s.nome like _utf8 ? COLLATE utf8_unicode_ci',
-				{ type: oldDb.QueryTypes.SELECT, replacements: [nome] }
-			);
-
-			if (response.length === 0) {
+				if (response.length === 0) {
+					return null;
+				}
+		
+				return response[0];
+			} else {
+				console.error('DRE NOT FOUND: ', despId[0].desp_id);
 				return null;
 			}
-			return response[0];
 		};
 
 		const dre = await getDRE();
+
+
+		if (dre === null) {
+			console.error('NULL DRE - custo_variavel', o.lancustvar_id);
+		}
+
 
 		const custoVariavel = {
 			historico: (o.lancustvar_historico === null || o.lancustvar_historico.trim().length === 0) ? null : o.lancustvar_historico,
@@ -175,20 +187,18 @@ const saveCompra = async () => {
 		};
 
 		const getSubgrupoFrete = async () => {
-			let nome = await oldDb.query(
-				'select desp_nome from cadastro_despesa where desp_id = (select lancabec_frete from lancamento_compra_cabecalho where lancabec_id = ? limit 1)',
+			const despId = await oldDb.query(
+				'select desp_id from cadastro_despesa where desp_id = (select custvar_cod_despesa from custo_variavel where custvar_cod_lancamento_compra = ? limit 1)',
 				{ type: oldDb.QueryTypes.SELECT, replacements: [o.lancabec_id] }
 			);
 
-			if (nome.length === 0) {
+			if (despId.length === 0) {
 				return null;
 			}
 
-			nome = nome[0].desp_nome.split(' ').map(o => '%' + o + '%').join(' ');
-
 			const response = await newDb.query(
-				'select id from subgrupo_contas where nome like _utf8 ? COLLATE utf8_unicode_ci', 
-				{ type: oldDb.QueryTypes.SELECT, replacements: [nome] }
+				'select s.id from subgrupo_contas s where s.id = ?',
+				{ type: oldDb.QueryTypes.SELECT, replacements: [dreMap[despId[0].desp_id]] }
 			);
 
 			if (response.length === 0) {
@@ -198,29 +208,38 @@ const saveCompra = async () => {
 		};
 
 		const getDRE = async () => {
-			let nome = await oldDb.query(
-				'select desp_nome from cadastro_despesa where desp_id = (select custvar_cod_despesa from custo_variavel where custvar_cod_lancamento_compra = ? limit 1)',
+			const despId = await oldDb.query(
+				'select desp_id from cadastro_despesa where desp_id = (select custvar_cod_despesa from custo_variavel where custvar_cod_lancamento_compra = ? limit 1)',
 				{ type: oldDb.QueryTypes.SELECT, replacements: [o.lancabec_id] }
 			);
 
-			if (nome.length === 0) {
+			if (despId.length === 0) {
+				console.error('No despId - lancabec ', o.lancabec_id);
 				return null;
 			}
+			
+			if (typeof dreMap[despId[0].desp_id] !== 'undefined') {
+				const response = await newDb.query(
+					'select s.id, s.grupoContasFk, g.planoContasFk from subgrupo_contas s left join grupo_contas g on g.id = s.grupoContasFk where s.id = ?',
+					{ type: oldDb.QueryTypes.SELECT, replacements: [dreMap[despId[0].desp_id]] }
+				);
 
-			nome = nome[0].desp_nome.split(' ').map(o => '%' + o + '%').join(' ');
+				if (response.length === 0) {
+					return null;
+				}
 
-			const response = await newDb.query(
-				'select s.id, s.grupoContasFk, g.planoContasFk from subgrupo_contas s left join grupo_contas g on g.id = s.grupoContasFk where s.nome like _utf8 ? COLLATE utf8_unicode_ci',
-				{ type: oldDb.QueryTypes.SELECT, replacements: [nome] }
-			);
-
-			if (response.length === 0) {
+				return response[0];
+			} else {
+				console.error('DRE NOT FOUND: ', o.lancustfix_cod_despesa);
 				return null;
 			}
-			return response[0];
 		};
 
 		const dre = await getDRE();
+		
+		if (dre === null) {
+			console.error('NULL DRE - custo_variavel_compra', o.lancabec_id);
+		}
 
 		const compra = {
 			tipo: 'COMPRA',

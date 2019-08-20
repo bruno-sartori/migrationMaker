@@ -1,5 +1,6 @@
 import datasource from '../datasource';
 import fs from 'fs';
+import dreMap from '../dreMap';
 
 const { newDb, oldDb } = datasource();
 
@@ -16,29 +17,26 @@ export async function up(queryInterface) {
 		const o = custos[i];
 
 		const getDRE = async () => {
-			let nome = await oldDb.query(
-				'select desp_nome from cadastro_despesa where desp_id = (select lancustfix_cod_despesa from lancamento_custo_fixo where lancustfix_id = ? limit 1)',
-				{ type: oldDb.QueryTypes.SELECT, replacements: [o.lancustfix_id] }
-			);
+			if (typeof dreMap[o.lancustfix_cod_despesa] !== 'undefined') {
+				const response = await newDb.query(
+					'select s.id, s.grupoContasFk, g.planoContasFk from subgrupo_contas s left join grupo_contas g on g.id = s.grupoContasFk where s.id = ?',
+					{ type: oldDb.QueryTypes.SELECT, replacements: [dreMap[o.lancustfix_cod_despesa]] }
+				);
 
-			if (nome.length === 0) {
+				if (response.length === 0) {
+					return null;
+				}
+				return response[0];
+			} else {
 				return null;
 			}
-
-			nome = nome[0].desp_nome.split(' ').map(o => '%' + o + '%').join(' ');
-
-			const response = await newDb.query(
-				'select s.id, s.grupoContasFk, g.planoContasFk from subgrupo_contas s left join grupo_contas g on g.id = s.grupoContasFk where s.nome like _utf8 ? COLLATE utf8_unicode_ci',
-				{ type: oldDb.QueryTypes.SELECT, replacements: [nome] }
-			);
-
-			if (response.length === 0) {
-				return null;
-			}
-			return response[0];
 		};
 
 		const dre = await getDRE();
+
+		if (dre === null) {
+			console.error('NULL DRE - custo-fixo', o.lancustfix_id);
+		}
 
 		const custoFixo = {
 			id: o.lancustfix_id,

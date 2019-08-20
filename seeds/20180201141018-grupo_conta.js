@@ -24,7 +24,10 @@ export function up(queryInterface) {
 
 		// PERCAS
 		{ id: 15, nome: 'CANCELAMENTOS', planoContasFk: 5 },
-		
+
+		// INVESTIMENTOS
+		{ id: 16, nome: 'IMÓVEIS', planoContasFk: 4 },
+
 	]);
 }
 
