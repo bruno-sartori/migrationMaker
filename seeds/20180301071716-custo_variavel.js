@@ -69,7 +69,7 @@ const saveCustoVariavel = async () => {
 
 
 		const custoVariavel = {
-			historico: (o.lancustvar_historico === null || o.lancustvar_historico.trim().length === 0) ? null : o.lancustvar_historico,
+			historico: (o.lancustvar_historico === null || o.lancustvar_historico.trim().length === 0) ? null : o.lancustvar_historico.toUpperCase(),
 			tipo: 'VARIÁVEL',
 			createdAt: o.lancustvar_data,
 			totalParcelas: o.lancustvar_numero_parcelas,
