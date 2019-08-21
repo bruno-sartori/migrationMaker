@@ -1,6 +1,6 @@
 import fs from 'fs';
 import datasource from '../datasource';
-import { isValidDate } from '../util/isValidVariable';
+import { isValidDate, isValidString } from '../util/isValidVariable';
 
 const { newDb, oldDb } = datasource();
 
@@ -25,7 +25,7 @@ export async function up(queryInterface) {
 			status: isValidDate(o.custfix_data_pagamento) ? 'paid': 'open',
 			valorParcela: o.custfix_valor_parcela === null ? 0 : o.custfix_valor_parcela,
 			valorPago: o.custfix_valor_pago,
-			notaFiscal: o.custfix_nota_fiscal,
+			notaFiscal: isValidString(o.custfix_nota_fiscal) ? o.custfix_nota_fiscal.toUpperCase() : o.custfix_nota_fiscal,
 			juros: o.custfix_valor_juros,
 			historico: null
 		};

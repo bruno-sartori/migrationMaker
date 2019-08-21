@@ -1,6 +1,7 @@
 import datasource from '../datasource';
 import fs from 'fs';
 import dreMap from '../dreMap';
+import { isValidString } from '../util/isValidVariable';
 
 const { newDb, oldDb } = datasource();
 
@@ -50,7 +51,7 @@ export async function up(queryInterface) {
 			inicioLancamento: o.lancustfix_data_primeiro_vencimento.split('/')[1] + '-' + o.lancustfix_data_primeiro_vencimento.split('/')[0],
 			diaVencimento: (o.lancustfix_dia_vencimento.toString().length === 2) ? o.lancustfix_dia_vencimento : `0${o.lancustfix_dia_vencimento}`,
 			valorParcela: o.lancustfix_valor_parcela,
-			historico: o.lancustfix_historico,
+			historico: isValidString(o.lancustfix_historico) ? o.lancustfix_historico.toUpperCase() : o.lancustfix_historico,
 			obs: o.lancustfix_obs,
 			createdAt: o.lancustfix_data_lancamento
 		};

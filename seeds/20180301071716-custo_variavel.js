@@ -74,7 +74,7 @@ const saveCustoVariavel = async () => {
 			createdAt: o.lancustvar_data,
 			totalParcelas: o.lancustvar_numero_parcelas,
 			valorTotal: o.lancustvar_valor_total,
-			notaFiscal: (o.lancustvar_nota_fiscal === null || o.lancustvar_nota_fiscal.trim().length === 0) ? null : o.lancustvar_nota_fiscal,
+			notaFiscal: (o.lancustvar_nota_fiscal === null || o.lancustvar_nota_fiscal.trim().length === 0) ? null : o.lancustvar_nota_fiscal.toUpperCase(),
 			dataCusto: o.lancustvar_data,
 			primeiroVencimento: pv.length > 0 ? pv[0].custvar_data_vencimento : new Date(),
 			totalParcelamento: tp.length > 0 && tp[0].alias !== null ? tp[0].alias : 0,
@@ -243,7 +243,7 @@ const saveCompra = async () => {
 
 		const compra = {
 			tipo: 'COMPRA',
-			notaFiscal: (o.lancabec_nota_fiscal === null || o.lancabec_nota_fiscal.trim().length === 0) ? null : o.lancabec_nota_fiscal,
+			notaFiscal: (o.lancabec_nota_fiscal === null || o.lancabec_nota_fiscal.trim().length === 0) ? null : o.lancabec_nota_fiscal.toUpperCase(),
 			dataCusto: o.lancabec_data,
 			totalParcelas: o.lancabec_numero_parcelas,
 			valorTotal: o.lancabec_valor_total,
@@ -252,7 +252,7 @@ const saveCompra = async () => {
 			planoContasFk: dre !== null ? dre.planoContasFk : 1,
 			grupoContasFk: dre !== null ? dre.grupoContasFk : 1,
 			subgrupoContasFk: dre !== null ? dre.id : 1,
-			historico: (o.lancabec_historico === null || o.lancabec_historico.trim().length === 0) ? null : o.lancabec_historico,
+			historico: (o.lancabec_historico === null || o.lancabec_historico.trim().length === 0) ? null : o.lancabec_historico.toUpperCase(),
 			credorFornecedor: o.lancabec_cod_fornecedor,
 			credorFuncionario: null,
 			tipoCredor: 'FORNECEDOR',
