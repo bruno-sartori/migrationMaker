@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 	config = {
 		username: 'root',
 		password: 'root',
-		database: 'test',
+		database: 'isp_dev',
 		host: 'localhost',
 		dialect: "mysql",
 		define: {

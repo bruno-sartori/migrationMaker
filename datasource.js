@@ -48,7 +48,7 @@ export default function () {
 			logging: false
 		});
 		
-		newDb = new Sequelize('test', 'root', 'root', {
+		newDb = new Sequelize('isp_dev', 'root', 'root', {
 			host: 'localhost',
 			port: '3306',
 			dialect: 'mysql',
