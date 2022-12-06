@@ -24,7 +24,7 @@
     "joi-assert": "0.0.3",
     "mocha": "^2.5.3",
     "nodemon": "^1.10.2",
-    "supertest": "^1.2.0",
+    "supertest": "^6.3.2",
     "testdouble": "^1.6.0"
   },
   "dependencies": {
